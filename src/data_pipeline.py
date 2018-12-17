@@ -4,11 +4,11 @@ import pickle
 import random
 import csv
 
-DATA_DIR = '../data/E_coli_v4_Build_6'
-SYNTHETIC_DIR = '../data/artificial'
-SUBSET_DIR = '../data/subsets'
-REGULATORY_NET_DIR = '../data/regulatory_networks'
-CSV_DIR = '../data/csv'
+DATA_DIR = './data/E_coli_v4_Build_6'
+SYNTHETIC_DIR = './data/artificial'
+SUBSET_DIR = './data/subsets'
+REGULATORY_NET_DIR = './data/regulatory_networks'
+CSV_DIR = './data/csv'
 DEFAULT_DATAFILE = 'E_coli_v4_Build_6_chips907probes4297.tab'
 PROBE_DESCRIPTIONS = 'E_coli_v4_Build_6.probe_set_descriptions'
 DEFAULT_REGULATORY_INTERACTIONS = 'regulatory_interactions'
