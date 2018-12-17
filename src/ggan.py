@@ -15,7 +15,7 @@ warnings.filterwarnings('ignore', message='Discrepancy between')
 
 LATENT_DIM = 20
 DEFAULT_NOISE_RATE = 0.25
-CHECKPOINTS_DIR = '../checkpoints'
+CHECKPOINTS_DIR = './checkpoints'
 
 
 # TODO: Pass function of evaluation scores in train instead of gene symbols
@@ -261,7 +261,7 @@ class gGAN:
                 r_tf_tg_corr_flat, r_tg_tg_corr_flat = compute_tf_tg_corrs(self._data, self._gene_symbols, flat=False)
                 s_tf_tg_corr_flat, s_tg_tg_corr_flat = compute_tf_tg_corrs(s_expr, self._gene_symbols, flat=False)
                 psi_dx_dz = psi_coefficient(r_tf_tg_corr_flat, s_tf_tg_corr_flat)
-                theta_dx_dz = theta_coefficient(r_tg_tg_corr_flat, s_tg_tg_corr_flat)
+                theta_dx_dz = phi_coefficient(r_tg_tg_corr_flat, s_tg_tg_corr_flat)
 
                 self._write_log(self._callback_gen,
                                 ['Gamma(D^X, D^Z)', 'Gamma(D^Z, T^Z)', 'Gamma(T^X, T^Z)', 'Psi(D^X, D^Z)', 'Phi(D^X, D^Z)'],

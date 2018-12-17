@@ -124,10 +124,12 @@ def gamma_coefficients(expr_x, expr_z):
 
     # Compute Gamma(D^X, T^X)
     xl_matrix = hierarchical_clustering(expr_x)
+    xl_matrix[xl_matrix < 0.] = 0.
     gamma_dx_tx, _ = cophenet(xl_matrix, dists_x)
 
     # Compute Gamma(D^Z, T^Z)
     zl_matrix = hierarchical_clustering(expr_z)
+    zl_matrix[zl_matrix < 0.] = 0.
     gamma_dz_tz, _ = cophenet(zl_matrix, dists_z)
 
     # Compute Gamma(T^X, T^Z)
@@ -291,6 +293,31 @@ def compute_scores(expr_x, expr_z, gene_symbols):
             (gamma_dx_tx - gamma_dz_tz)**2,
             psi_dx_dz,
             phi_dx_dz,
+            omega_coeff]
+
+def compute_scores_no_network(expr_x, expr_z, gene_symbols):
+    """
+    Computes evaluation scores
+    :param expr_x: real data. Shape=(nb_samples_1, nb_genes)
+    :param expr_z: synthetic data. Shape=(nb_samples_2, nb_genes)
+    :param gene_symbols: list of gene symbols (the genes dimension is sorted according to this list). Shape=(nb_genes,)
+    :return: list of evaluation coefficients (S_dist, S_dend, S_sdcc, S_tftg, S_tgtg, S_tfac)
+    """
+    # Gamma coefficients
+    gamma_dx_dz, gamma_dx_tx, gamma_dz_tz, gamma_tx_tz = gamma_coefficients(expr_x, expr_z)
+
+    # Psi and phi coefficients
+    #r_tf_tg_corr, r_tg_tg_corr = compute_tf_tg_corrs(expr_x, gene_symbols, flat=False)
+    #s_tf_tg_corr, s_tg_tg_corr = compute_tf_tg_corrs(expr_z, gene_symbols, flat=False)
+    #psi_dx_dz = psi_coefficient(r_tf_tg_corr, s_tf_tg_corr)
+    #phi_dx_dz = phi_coefficient(r_tg_tg_corr, s_tg_tg_corr)
+
+    # Omega score
+    omega_coeff = omega_coefficient(expr_x, expr_z, gene_symbols)
+
+    return [gamma_dx_dz,
+            gamma_tx_tz,
+            (gamma_dx_tx - gamma_dz_tz)**2,
             omega_coeff]
 
 
